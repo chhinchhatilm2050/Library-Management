@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BiblioTrack — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-shell">
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-mark"><img class="dash-img" src="./img/photo_2026-04-26_00-16-27.jpg" alt=""></i></div>
+      <div>
+        <span class="brand-name">SETECT</span>
+        <span class="brand-tag">Library System</span>
+      </div>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a class="nav-link active" data-view="dashboard"><i class="bi bi-grid-fill"></i> Dashboard</a></li>
+      <li><a class="nav-link" data-view="books"><i class="bi bi-journal-bookmark-fill"></i> Books</a></li>
+      <li><a class="nav-link" data-view="categories"><i class="bi bi-tags-fill"></i> Categories</a></li>
+      <li><a class="nav-link" data-view="orders"><i class="bi bi-cart-check-fill"></i> Orders</a></li>
+      <li><a class="nav-link" data-view="users"><i class="bi bi-people-fill"></i> Users</a></li>
+      <li><a class="nav-link" id="logoutLink"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+    </ul>
+    <div class="sidebar-foot">SETEC-INSTITUTE &copy; Library Management 2026</div>
+  </aside>
+
+  <div class="main-area">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger-btn" id="hamburgerBtn"><i class="bi bi-list"></i></button>
+        <div class="topbar-title">
+          <h1 id="pageTitle">DASHBOARD</h1>
+        </div>
+      </div>
+
+      <!-- <div class="topbar-search">
+        <i class="bi bi-search"></i>
+        <input type="text" id="globalSearch" placeholder="Search current section...">
+      </div> -->
+
+      <div class="topbar-right">
+        <!-- <button class="bell-btn"><i class="bi bi-bell-fill"></i></button> -->
+        <div class="user-chip" id="userChip">
+          <div class="avatar" id="userAvatar">A</div>
+          <div>
+            <div class="name" id="userName">—</div>
+            <div class="role" id="userRole">—</div>
+          </div>
+          <i class="bi bi-chevron-down" style="font-size:.75rem;color:var(--color-text-muted);"></i>
+          <div class="user-menu" id="userMenu">
+            <a href="#" id="logoutLink2"><i class="bi bi-box-arrow-right"></i> Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- ===================== DASHBOARD VIEW ===================== -->
+      <section class="view-section active" id="view-dashboard">
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="icon"><i class="bi bi-journal-bookmark-fill"></i></div>
+            <div><div class="value" id="statBooks">0</div><div class="label">Total Books</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="icon"><i class="bi bi-tags-fill"></i></div>
+            <div><div class="value" id="statCategories">0</div><div class="label">Categories</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="icon"><i class="bi bi-cart-check-fill"></i></div>
+            <div><div class="value" id="statOrders">0</div><div class="label">Orders</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="icon"><i class="bi bi-people-fill"></i></div>
+            <div><div class="value" id="statUsers">0</div><div class="label">Registered Users</div></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-search">
+            <strong style="font-family:var(--font-display);font-size:1.05rem;">Recent Orders</strong>
+            <span class="count-pill" id="recentCountPill">0 records</span>
+          </div>
+          <div class="table-responsive">
+            <table class="lib-table">
+              <thead>
+                <tr><th>ID</th><th>Borrower</th><th>Book</th><th>Qty</th><th>Date</th><th>Status</th></tr>
+              </thead>
+              <tbody id="recentOrdersBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== BOOKS VIEW ===================== -->
+      <section class="view-section" id="view-books">
+        <div class="section-head">
+          <div>
+            <h2>Books Management</h2>
+            <p class="sub">Manage your library catalog</p>
+          </div>
+          <button class="btn-add" id="addBookBtn"><i class="bi bi-plus-circle"></i> Add Book</button>
+        </div>
+
+        <div class="panel">
+          <div class="panel-search">
+            <div class="search-box"><i class="bi bi-search"></i><input type="text" id="searchBooks" placeholder="Search books..."></div>
+            <span class="count-pill" id="booksCountPill">0 records</span>
+          </div>
+          <div class="table-responsive">
+            <table class="lib-table">
+              <thead>
+                <tr><th>ID</th><th>Title</th><th>Author</th><th>Category</th><th>Quantity</th><th>Status</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="booksBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== CATEGORIES VIEW ===================== -->
+      <section class="view-section" id="view-categories">
+        <div class="section-head">
+          <div>
+            <h2>Categories Management</h2>
+            <p class="sub">Organize books by category</p>
+          </div>
+          <button class="btn-add" id="addCategoryBtn"><i class="bi bi-plus-circle"></i> Add Category</button>
+        </div>
+
+        <div class="panel">
+          <div class="panel-search">
+            <div class="search-box"><i class="bi bi-search"></i><input type="text" id="searchCategories" placeholder="Search categories..."></div>
+            <span class="count-pill" id="categoriesCountPill">0 records</span>
+          </div>
+          <div class="table-responsive">
+            <table class="lib-table">
+              <thead>
+                <tr><th>ID</th><th>Name</th><th>Description</th><th>Books</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="categoriesBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== ORDERS VIEW ===================== -->
+      <section class="view-section" id="view-orders">
+        <div class="section-head">
+          <div>
+            <h2>Orders Management</h2>
+            <p class="sub">Manage borrow &amp; return requests</p>
+          </div>
+          <button class="btn-add" id="addOrderBtn"><i class="bi bi-plus-circle"></i> Add Order</button>
+        </div>
+
+        <div class="panel">
+          <div class="panel-search">
+            <div class="search-box"><i class="bi bi-search"></i><input type="text" id="searchOrders" placeholder="Search orders..."></div>
+            <span class="count-pill" id="ordersCountPill">0 records</span>
+          </div>
+          <div class="table-responsive">
+            <table class="lib-table">
+              <thead>
+                <tr><th>ID</th><th>Borrower</th><th>Book</th><th>Quantity</th><th>Date</th><th>Status</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="ordersBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== USERS VIEW ===================== -->
+      <section class="view-section" id="view-users">
+        <div class="section-head">
+          <div>
+            <h2>Users Management</h2>
+            <p class="sub">Manage member &amp; staff accounts</p>
+          </div>
+          <button class="btn-add" id="addUserBtn"><i class="bi bi-plus-circle"></i> Add User</button>
+        </div>
+
+        <div class="panel">
+          <div class="panel-search">
+            <div class="search-box"><i class="bi bi-search"></i><input type="text" id="searchUsers" placeholder="Search users..."></div>
+            <span class="count-pill" id="usersCountPill">0 records</span>
+          </div>
+          <div class="table-responsive">
+            <table class="lib-table">
+              <thead>
+                <tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Joined</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="usersBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ===================== BOOK MODAL ===================== -->
+<div class="lib-modal-backdrop" id="bookModal">
+  <div class="lib-modal">
+    <div class="lib-modal-head">
+      <h3 id="bookModalTitle">Add Book</h3>
+      <button data-close="bookModal"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="lib-modal-body">
+      <form id="bookForm">
+        <input type="hidden" id="bookId">
+        <label class="form-label-lib">Title</label>
+        <input class="form-control-lib-popup" type="text" id="bookTitle" placeholder="e.g. The Great Gatsby" required>
+
+        <label class="form-label-lib">Author</label>
+        <input class="form-control-lib-popup" type="text" id="bookAuthor" placeholder="e.g. F. Scott Fitzgerald" required>
+
+        <div class="field-row">
+          <div>
+            <label class="form-label-lib">Category</label>
+            <select class="form-control-lib-popup" id="bookCategory" required></select>
+          </div>
+          <div>
+            <label class="form-label-lib">Quantity</label>
+            <input class="form-control-lib-popup" type="number" id="bookQuantity" min="0" value="1" required>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="lib-modal-foot">
+      <button class="btn-modal cancel" data-close="bookModal">Cancel</button>
+      <button class="btn-modal save" id="bookSaveBtn">Save Book</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CATEGORY MODAL ===================== -->
+<div class="lib-modal-backdrop" id="categoryModal">
+  <div class="lib-modal modal-sm">
+    <div class="lib-modal-head">
+      <h3 id="categoryModalTitle">Add Category</h3>
+      <button data-close="categoryModal"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="lib-modal-body">
+      <form id="categoryForm">
+        <input type="hidden" id="categoryId">
+        <label class="form-label-lib">Category Name</label>
+        <input class="form-control-lib-popup" type="text" id="categoryName" placeholder="e.g. Fiction" required>
+
+        <label class="form-label-lib">Description</label>
+        <input class="form-control-lib-popup" type="text" id="categoryDescription" placeholder="Short description">
+      </form>
+    </div>
+    <div class="lib-modal-foot">
+      <button class="btn-modal cancel" data-close="categoryModal">Cancel</button>
+      <button class="btn-modal save" id="categorySaveBtn">Save Category</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== ORDER MODAL ===================== -->
+<div class="lib-modal-backdrop" id="orderModal">
+  <div class="lib-modal">
+    <div class="lib-modal-head">
+      <h3 id="orderModalTitle">Add Order</h3>
+      <button data-close="orderModal"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="lib-modal-body">
+      <form id="orderForm">
+        <input type="hidden" id="orderId">
+        <label class="form-label-lib">Borrower Name</label>
+        <input class="form-control-lib-popup" type="text" id="orderBorrower" placeholder="e.g. Seng Dara" required>
+
+        <label class="form-label-lib">Book</label>
+        <select class="form-control-lib-popup" id="orderBook" required></select>
+
+        <div class="field-row">
+          <div>
+            <label class="form-label-lib">Quantity</label>
+            <input class="form-control-lib-popup" type="number" id="orderQuantity" min="1" value="1" required>
+          </div>
+          <div>
+            <label class="form-label-lib">Date</label>
+            <input class="form-control-lib-popup" type="date" id="orderDate" required>
+          </div>
+        </div>
+
+        <label class="form-label-lib">Status</label>
+        <select class="form-control-lib-popup" id="orderStatus" required>
+          <option value="Pending">Pending</option>
+          <option value="Borrowed">Borrowed</option>
+          <option value="Returned">Returned</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </form>
+    </div>
+    <div class="lib-modal-foot">
+      <button class="btn-modal cancel" data-close="orderModal">Cancel</button>
+      <button class="btn-modal save" id="orderSaveBtn">Save Order</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== USER MODAL ===================== -->
+<div class="lib-modal-backdrop" id="userModal">
+  <div class="lib-modal">
+    <div class="lib-modal-head">
+      <h3 id="userModalTitle">Add User</h3>
+      <button data-close="userModal"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="lib-modal-body">
+      <form id="userForm">
+        <input type="hidden" id="userId">
+        <label class="form-label-lib">Full Name</label>
+        <input class="form-control-lib-popup" type="text" id="userFullName" placeholder="e.g. Seng Dara" required>
+
+        <label class="form-label-lib">Email</label>
+        <input class="form-control-lib-popup" type="email" id="userEmail" placeholder="you@library.com" required>
+
+        <div class="field-row">
+          <div>
+            <label class="form-label-lib">Role</label>
+            <select class="form-control-lib-popup" id="userRoleSelect" required>
+              <option value="Admin">Admin</option>
+              <option value="Librarian">Librarian</option>
+              <option value="Member">Member</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label-lib">Password</label>
+            <input class="form-control-lib-popup" type="text" id="userPassword" placeholder="Account password" required>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="lib-modal-foot">
+      <button class="btn-modal cancel" data-close="userModal">Cancel</button>
+      <button class="btn-modal save" id="userSaveBtn">Save User</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== DELETE CONFIRM MODAL ===================== -->
+<div class="lib-modal-backdrop" id="confirmModal">
+  <div class="lib-modal modal-sm">
+    <div class="lib-modal-body" style="padding-top:28px;">
+      <div class="confirm-icon"><i class="bi bi-trash3"></i></div>
+      <p class="confirm-text">Are you sure you want to delete <strong id="confirmTarget">this record</strong>? This action cannot be undone.</p>
+    </div>
+    <div class="lib-modal-foot">
+      <button class="btn-modal cancel" data-close="confirmModal">Cancel</button>
+      <button class="btn-modal danger" id="confirmDeleteBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script src="js/utils.js" type="module"></script>
+<script src="js/dashboard.js" type="module"></script>
+<script src="js/books.js" type="module"></script>
+<script src="js/categories.js" type="module"></script>
+<script src="js/orders.js" type="module"></script>
+<script src="js/users.js" type="module"></script>
+<script src="js/core.js" type="module"></script>
+</body>
+</html>
