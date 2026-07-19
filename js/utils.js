@@ -71,7 +71,6 @@ export function showToast(message, type = 'success'){
   }, 2800);
 }
 
-/* ---------- Seed default data (first run only) ---------- */
 export function seedDatabase(){
   if(!localStorage.getItem(DB_KEYS.users)){
     dbSet(DB_KEYS.users, [

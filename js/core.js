@@ -1,4 +1,3 @@
-
 export let CURRENT_USER = null;
 export let DELETE_CONTEXT = null;
 import { DB_KEYS, dbGet, dbSet, seedDatabase, showToast } from "./utils.js";
